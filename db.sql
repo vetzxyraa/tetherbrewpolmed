@@ -1,28 +1,22 @@
--- 1. Hapus Database Lama (Reset)
+-- Bersihin database lama kalo ada, biar fresh
 DROP DATABASE IF EXISTS db_kopi_tether;
 
--- 2. Buat Database Baru
+-- Bikin database baru
 CREATE DATABASE db_kopi_tether;
 USE db_kopi_tether;
 
--- ==========================================
--- TABEL ADMIN
--- ==========================================
+-- Login
 CREATE TABLE admins (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
     password VARCHAR(255) NOT NULL
 );
 
--- Insert Akun Admin Default
--- Username: admin
--- Password: admin123
+-- Masukin satu akun admin default
 INSERT INTO admins (username, password) VALUES ('admin', 'admin123');
 
 
--- ==========================================
--- TABEL PRODUK (MENU KOPI)
--- ==========================================
+-- Produk
 CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -30,8 +24,7 @@ CREATE TABLE products (
     image VARCHAR(255) NOT NULL
 );
 
--- Insert Dummy Data Produk
--- (Gambar menggunakan path lokal, pastikan Anda memiliki file atau sistem akan menggunakan placeholder)
+-- Isi data dummy biar gak kosong pas pertama kali jalan
 INSERT INTO products (name, price, image) VALUES 
 ('Espresso Nendang', 15000, 'assets/img/menu/dummy_espresso.jpg'),
 ('Cappuccino Creamy', 22000, 'assets/img/menu/dummy_cappuccino.jpg'),
@@ -42,35 +35,32 @@ INSERT INTO products (name, price, image) VALUES
 ('V60 Manual Brew', 28000, 'assets/img/menu/dummy_v60.jpg'),
 ('Kopi Gula Aren', 18000, 'assets/img/menu/dummy_aren.jpg');
 
-
--- ==========================================
--- TABEL PENGATURAN HALAMAN (PAGE SETTINGS)
--- ==========================================
+-- Tabel 
 CREATE TABLE page_settings (
     id INT PRIMARY KEY,
     
-    -- Hero Section (Bagian Atas)
+    -- Bagian Banner Atas
     hero_title VARCHAR(255),
     hero_desc TEXT,
     hero_bg VARCHAR(255),
     
-    -- About Section (Tentang Kami)
+    -- Bagian Tentang Kami
     about_title VARCHAR(255),
     about_desc TEXT,
     about_img VARCHAR(255),
     
-    -- Contact Section (Kontak & Footer)
+    -- Kontak & Footer
     contact_address TEXT,
     contact_email VARCHAR(100),
     contact_phone VARCHAR(50),
     
-    -- Social Media Links (Baru)
+    -- Link Sosmed
     link_ig VARCHAR(255) DEFAULT '#',
     link_twitter VARCHAR(255) DEFAULT '#',
     link_fb VARCHAR(255) DEFAULT '#'
 );
 
--- Insert Data Default Pengaturan
+-- Masukin data default buat settingan halaman
 INSERT INTO page_settings (
     id, 
     hero_title, hero_desc, hero_bg, 
@@ -80,22 +70,22 @@ INSERT INTO page_settings (
 ) 
 VALUES (
     1, 
-    -- Hero
+    -- Banner
     'Brew Your Mood', 
     'Dari biji terbaik hingga ke cangkirmu, kami meracik rasa untuk menemani harimu.', 
     'assets/img/header-bg.jpeg', 
     
-    -- About
+    -- Tentang Kami
     'Kenapa memilih kami?', 
     'Tether Brew hadir dari kecintaan kami pada kopi. Kami berkomitmen menyajikan rasa terbaik dengan suasana yang nyaman dan pelayanan ramah. Setiap biji kopi kami dipilih dari petani lokal terbaik.', 
     'assets/img/tentangkami2.jpeg',
     
-    -- Contact
+    -- Kontak
     'Jl. Kopi Nikmat No. 123, Surabaya, Jawa Timur',
     'info@parabrew.com',
-    '082380202322', -- Format 08xx, nanti sistem otomatis ubah ke 62xx
+    '082380202322', 
     
-    -- Sosmed (Default kosong/#)
+    -- Sosmed
     'https://instagram.com/kopi_tether',
     '#',
     '#'

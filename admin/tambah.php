@@ -1,4 +1,5 @@
 <?php include '../koneksi.php'; session_start(); 
+// Cek sesi login dulu
 if($_SESSION['status'] != "login"){ header("location:login.php"); }
 ?>
 <!DOCTYPE html>
@@ -41,23 +42,27 @@ if($_SESSION['status'] != "login"){ header("location:login.php"); }
         </form>
 
         <?php
+        // Proses pas tombol simpan dipencet
         if(isset($_POST['submit'])){
             $name = $_POST['name'];
             $price = $_POST['price'];
             
-            // Set Default Path
+            // Gambar default kalo user gak upload
             $final_path = "assets/img/menu/2.jpg"; 
 
+            // Cek ada file gambar yang diupload gak
             if(!empty($_FILES['image']['name'])) {
                 $rand = rand();
                 $filename = $_FILES['image']['name'];
                 $target_path = "assets/img/menu/".$rand."_".$filename;
                 
+                // Pindahin file ke folder tujuan
                 if(move_uploaded_file($_FILES['image']['tmp_name'], "../".$target_path)){
                     $final_path = $target_path;
                 }
             }
 
+            // Masukin data ke database
             $query = mysqli_query($conn, "INSERT INTO products VALUES(NULL, '$name', '$price', '$final_path')");
             
             if($query) {

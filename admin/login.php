@@ -1,5 +1,6 @@
 <?php
 session_start();
+// Kalo user ternyata udah login, langsung lempar ke dashboard aja
 if(isset($_SESSION['status']) && $_SESSION['status'] == "login"){
     header("location:dashboard.php");
 }
@@ -20,6 +21,7 @@ if(isset($_SESSION['status']) && $_SESSION['status'] == "login"){
 <body>
     <div class="login-box">
         <h2><i class="fa-solid fa-mug-hot"></i> Admin Area</h2>
+        
         <form method="post">
             <input type="text" name="username" placeholder="Username" required>
             <input type="password" name="password" placeholder="Password" required>
@@ -29,9 +31,11 @@ if(isset($_SESSION['status']) && $_SESSION['status'] == "login"){
         </form>
         
         <?php
+        // Proses cek username sama password
         if(isset($_POST['login'])){
             $user = $_POST['username'];
             $pass = $_POST['password'];
+            // Hardcode kredensial sederhana
             if($user == 'admin' && $pass == 'admin123'){
                 $_SESSION['username'] = $user;
                 $_SESSION['status'] = "login";

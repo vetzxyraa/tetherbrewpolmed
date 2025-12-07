@@ -1,20 +1,25 @@
 <?php 
 include 'koneksi.php'; 
+
+// Ambil data pengaturan tampilan dari database
 $settings_query = mysqli_query($conn, "SELECT * FROM page_settings WHERE id=1");
 $site = mysqli_fetch_assoc($settings_query);
 
+// Beresin format nomor HP biar bisa dipake buat link WA
 $nomor_db = $site['contact_phone'];
 $nomor_wa = preg_replace('/[^0-9]/', '', $nomor_db);
 if(substr($nomor_wa, 0, 1) == '0'){
     $nomor_wa = '62' . substr($nomor_wa, 1);
 }
 
+// Kalau user ngirim pesan lewat form kontak
 if(isset($_POST['kirim_kontak'])){
     $nama  = htmlspecialchars($_POST['nama']);
     $email = htmlspecialchars($_POST['email']);
     $hp    = htmlspecialchars($_POST['hp']);
     $pesan = htmlspecialchars($_POST['pesan']);
 
+    // Siapin format pesan buat dikirim ke WA admin
     $text_wa = "Halo Admin Kopi Tether, ada pesan baru dari website:%0a%0a";
     $text_wa .= "*Nama:* $nama%0a";
     $text_wa .= "*Email:* $email%0a";
@@ -38,6 +43,7 @@ if(isset($_POST['kirim_kontak'])){
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
   <style>
+      /* Pake gambar background dari database */
       .hero { background-image: url('<?php echo $site['hero_bg']; ?>'); }
   </style>
 </head>
@@ -77,6 +83,7 @@ if(isset($_POST['kirim_kontak'])){
     <div style="display: flex; gap: 3rem; flex-wrap: wrap; justify-content: center; align-items: center;">
       <div style="flex: 1 1 300px;">
         <?php 
+           // Cek gambar ada atau gak, kalo gak ada pake placeholder
            $aboutImg = $site['about_img'];
            if(empty($aboutImg) || !file_exists($aboutImg)){
                $aboutImg = 'https://placehold.co/400x300/333/d4af37?text=About+Image';
@@ -93,6 +100,7 @@ if(isset($_POST['kirim_kontak'])){
 
   <section id="menu" class="menu">
     <h2><span>Menu</span> Kami</h2>
+    
     <?php if(isset($_GET['keyword'])): ?>
       <div style="text-align:center; margin-bottom:30px;">
         <span style="background:var(--primary); color:#000; padding:5px 15px; border-radius:20px; font-weight:bold;">
@@ -104,6 +112,7 @@ if(isset($_POST['kirim_kontak'])){
 
     <div class="row">
       <?php
+      // Logika query, bedain kalo lagi search atau nampilin semua
       $query = isset($_GET['keyword']) ? 
                "SELECT * FROM products WHERE name LIKE '%".$_GET['keyword']."%' ORDER BY id DESC" : 
                "SELECT * FROM products ORDER BY id DESC";
@@ -112,12 +121,16 @@ if(isset($_POST['kirim_kontak'])){
       if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
           $harga = number_format($row['price'], 0, ',', '.');
+          
+          // Fallback gambar kalo file nya ilang
           $gambarDB = $row['image'];
           if(!empty($gambarDB) && file_exists($gambarDB)){
               $gambarFinal = $gambarDB;
           } else {
               $gambarFinal = "https://placehold.co/300x250/222/d4af37?text=" . urlencode($row['name']);
           }
+          
+          // Siapin link buat pesan langsung ke WA
           $pesan = "Halo, saya ingin memesan *" . $row['name'] . "* (Rp " . $harga . ")";
           $link_beli = "https://wa.me/" . $nomor_wa . "?text=" . urlencode($pesan);
       ?>

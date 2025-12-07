@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../koneksi.php';
+// user balik ke login kalo belum masuk
 if($_SESSION['status'] != "login"){ header("location:login.php"); }
 ?>
 <!DOCTYPE html>
@@ -62,6 +63,7 @@ if($_SESSION['status'] != "login"){ header("location:login.php"); }
                 <tbody>
                     <?php
                     $no = 1;
+                    // Ambil semua data produk dari yang paling baru
                     $data = mysqli_query($conn, "SELECT * FROM products ORDER BY id DESC");
                     while($d = mysqli_fetch_array($data)){
                     ?>

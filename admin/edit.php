@@ -1,7 +1,10 @@
 <?php 
 include '../koneksi.php'; 
 session_start();
+// Pastiin udah login
 if($_SESSION['status'] != "login"){ header("location:login.php"); }
+
+// Ambil data produk berdasarkan ID yang dikirim
 $id = $_GET['id'];
 $d = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM products WHERE id='$id'"));
 ?>
@@ -48,17 +51,21 @@ $d = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM products WHERE id='$i
         </form>
 
         <?php
+        // Proses update data
         if(isset($_POST['update'])){
             $name = $_POST['name'];
             $price = $_POST['price'];
             $img_name = $_FILES['image']['name'];
             
+            // Kalo user upload gambar baru
             if($img_name != "") {
                 $rand = rand();
                 $path = "assets/img/menu/".$rand."_".$img_name;
                 move_uploaded_file($_FILES['image']['tmp_name'], "../".$path);
+                // Update teks + gambar
                 mysqli_query($conn, "UPDATE products SET name='$name', price='$price', image='$path' WHERE id='$id'");
             } else {
+                // Update teks doang
                 mysqli_query($conn, "UPDATE products SET name='$name', price='$price' WHERE id='$id'");
             }
             echo "<script>alert('Data Berhasil Diupdate!'); window.location='dashboard.php';</script>";

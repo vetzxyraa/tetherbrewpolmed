@@ -1,22 +1,24 @@
 :root {
+  /* Warna-warna utama biar gampang diganti */
   --primary: #d4af37;       /* Emas */
   --primary-dark: #b89628;  /* Emas Gelap */
   --bg: #1a1a1a;            /* Background Utama */
   --text: #ffffff;
   --nav-bg: rgba(0, 0, 0, 0.95);
   
-  /* Warna Tombol */
+  /* Warna Tombol Status */
   --danger: #e74c3c;
   --info: #3498db;
   --success: #2ecc71;
   --dark: #2c3e50;
 }
 
+/* Reset bawaan browser biar rapi */
 * { margin: 0; padding: 0; box-sizing: border-box; outline: none; border: none; text-decoration: none; }
 html { scroll-behavior: smooth; }
 body { font-family: 'Poppins', sans-serif; background-color: var(--bg); color: var(--text); }
 
-/* --- GLOBAL BUTTON & INPUT --- */
+/* --- Styling Tombol & Input Umum --- */
 button, .btn-action, .btn-pesan, .btn-save, .btn-back {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   padding: 10px 20px; border-radius: 8px; font-family: inherit; font-weight: 500;
@@ -25,14 +27,14 @@ button, .btn-action, .btn-pesan, .btn-save, .btn-back {
 }
 button:hover, .btn-action:hover, .btn-pesan:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
-/* Input Styles */
+/* Styling kotak input */
 input, textarea, select {
   width: 100%; padding: 12px 15px; margin: 8px 0; border: 1px solid #444;
   border-radius: 8px; background: #222; color: #fff; transition: 0.3s;
 }
 input:focus { border-color: var(--primary); }
 
-/* --- NAVBAR --- */
+/* --- NAVBAR ATAS --- */
 .navbar {
   display: flex; justify-content: space-between; align-items: center;
   padding: 1rem 7%; background-color: var(--nav-bg); border-bottom: 1px solid #333;
@@ -57,7 +59,7 @@ input:focus { border-color: var(--primary); }
 }
 .navbar-extra label:hover, .navbar-extra a:hover { background: rgba(212, 175, 55, 0.2); color: var(--primary); }
 
-/* Search Form */
+/* Form Pencarian yang muncul dari atas */
 #search-toggle-input { display: none; }
 .search-form {
   position: absolute; top: 100%; right: 7%; background: #fff; width: 30rem; height: 3.5rem;
@@ -68,7 +70,7 @@ input:focus { border-color: var(--primary); }
 .search-form button { width: 50px; height: 100%; background: var(--primary); color: #fff; border-radius: 0; }
 #search-toggle-input:checked ~ .search-form { transform: scaleY(1); }
 
-/* --- HERO SECTION --- */
+/* --- HERO SECTION / BANNER --- */
 .hero {
   min-height: 100vh; display: flex; align-items: center; justify-content: center;
   background-size: cover; background-position: center; position: relative; text-align: center;
@@ -79,12 +81,12 @@ input:focus { border-color: var(--primary); }
 .hero h1 span { color: var(--primary); }
 .hero p { font-size: 1.2rem; margin-top: 1rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
 
-/* --- SECTIONS (About, Menu, Contact) --- */
+/* --- SECTIONS UMUM (About, Menu, Contact) --- */
 .about, .menu, .contact { padding: 6rem 7% 2rem; }
 h2 { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; }
 h2 span { color: var(--primary); }
 
-/* Menu Card */
+/* Kartu Menu Kopi */
 .menu .row { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; }
 .menu-card {
   background: rgba(255, 255, 255, 0.05); border: 1px solid #333; border-radius: 15px;
@@ -99,7 +101,7 @@ h2 span { color: var(--primary); }
 .menu-card h3 { font-size: 1.2rem; margin: 0.5rem 0; }
 .menu-card-price { color: var(--primary); font-weight: bold; font-size: 1.2rem; margin-bottom: 1rem; }
 
-/* Contact Form Styles */
+/* Styling Form Kontak */
 .contact .row { display: flex; justify-content: center; }
 .contact form { width: 100%; max-width: 600px; text-align: center; }
 .input-group {
@@ -109,7 +111,7 @@ h2 span { color: var(--primary); }
 .input-group input { border: none; background: transparent; margin: 0; padding: 15px 10px; }
 .input-group i { color: var(--primary); }
 
-/* --- FOOTER (INI YANG HILANG KEMARIN) --- */
+/* --- FOOTER PALING BAWAH --- */
 footer { 
   text-align: center; 
   padding: 4rem 7% 2rem; 
@@ -154,7 +156,7 @@ footer .credit {
   color: #666; 
 }
 
-/* Button Variants */
+/* Variasi Warna Tombol */
 .btn-gold { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: #fff; }
 .btn-blue { background-color: var(--info); color: white; }
 .btn-green { background-color: var(--success); color: white; }
@@ -163,7 +165,7 @@ footer .credit {
 .btn-sm { padding: 6px 12px; font-size: 0.8rem; border-radius: 6px; }
 .btn-block { width: 100%; }
 
-/* Mobile Adjustment */
+/* Penyesuaian Tampilan HP */
 @media (max-width: 768px) {
   html { font-size: 80%; }
   .navbar-nav { display: none; }

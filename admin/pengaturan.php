@@ -1,7 +1,9 @@
 <?php
 session_start();
 include '../koneksi.php';
+// Cek login
 if($_SESSION['status'] != "login"){ header("location:login.php"); }
+// Ambil data settingan yang udah ada
 $data = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM page_settings WHERE id=1"));
 ?>
 <!DOCTYPE html>
@@ -94,7 +96,9 @@ $data = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM page_settings WHER
         </form>
 
         <?php
+        // Proses simpan semua perubahan
         if(isset($_POST['simpan'])){
+            // Tangkap semua inputan
             $hero_title = $_POST['hero_title'];
             $hero_desc  = $_POST['hero_desc'];
             $about_title = $_POST['about_title'];
@@ -106,6 +110,7 @@ $data = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM page_settings WHER
             $link_twitter = $_POST['link_twitter'];
             $link_fb = $_POST['link_fb'];
 
+            // Logika upload background hero baru
             $update_hero_img = "";
             if($_FILES['hero_bg']['name'] != ""){
                 $path = "assets/img/".rand()."_".$_FILES['hero_bg']['name'];
@@ -113,6 +118,7 @@ $data = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM page_settings WHER
                 $update_hero_img = ", hero_bg='$path'";
             }
 
+            // Logika upload gambar about baru
             $update_about_img = "";
             if($_FILES['about_img']['name'] != ""){
                 $path = "assets/img/".rand()."_".$_FILES['about_img']['name'];
@@ -120,6 +126,7 @@ $data = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM page_settings WHER
                 $update_about_img = ", about_img='$path'";
             }
 
+            // Query update panjang banget
             $sql = "UPDATE page_settings SET 
                     hero_title='$hero_title', hero_desc='$hero_desc', 
                     about_title='$about_title', about_desc='$about_desc',
